@@ -47,9 +47,14 @@ void print_result(int M, int K, double *C)
 }
 
 /*
- * Inits matrices for a simple example.
- * Matrices are present as 1D arrays 
- * with values in a column-wise order.
+ * Inits matrices for a simple example:
+ *
+ *   |1 1 1 1|   |1 1 1|   |10 10 10| 
+ *   |2 2 2 2| X |2 2 2| = |20 20 20|
+ *   |3 3 3 3|   |3 3 3|   |30 30 30|
+ *               |4 4 4|
+ * 
+ * Matrices are present as 1D arrays with values in a column-wise order.
  */
 void read_example(int *M, int *N, int *K, double **A, double **B, double **C) 
 {
