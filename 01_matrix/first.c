@@ -2,12 +2,18 @@
 #include <stdlib.h>
 #include <omp.h>
 
+/* 
+ * Set 1 to use a simple example.
+ * Set 0 to read random arrays from file.
+*/
+#define READ_EXAMPLE 0
+
 /*
  * Multiplicates two matrices (A x B) and writes result into C.
  *  - A should have len==M*N;
  *  - B should have len==N*K;
  *  - C should have len==M*K.
- * All matrices should store values in the column-wise order.
+ * All matrices should store values in a column-wise order.
  */
 void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 {
@@ -26,7 +32,7 @@ void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 /*
  * Prints values of matrix C.
  * Matrix should be present as an 1D array 
- * and store values in the column-wise order. 
+ * and store values in a column-wise order. 
  */
 void print_result(int M, int K, double *C)
 {
@@ -41,10 +47,45 @@ void print_result(int M, int K, double *C)
 }
 
 /*
+ * Inits matrices for a simple example.
+ * Matrices are present as 1D arrays 
+ * with values in a column-wise order.
+ */
+void read_example(int *M, int *N, int *K, double **A, double **B, double **C) 
+{
+        
+        *M = 3;
+        *N = 4;
+        *K = 3;
+
+        double _A[12] = {
+                1., 2., 3.,
+                1., 2., 3.,
+                1., 2., 3.,
+                1., 2., 3.
+        };
+
+        double _B[12] = {
+                1., 2., 3., 4.,
+                1., 2., 3., 4.,
+                1., 2., 3., 4.
+        };
+
+        *A = malloc(sizeof(double) * 12);
+        *B = malloc(sizeof(double) * 12);
+        *C = malloc(sizeof(double) * 9);
+
+        for (int i = 0; i < 12; i++) {
+                (*A)[i] = _A[i];
+                (*B)[i] = _B[i];
+        }
+}
+
+/*
  * Reads values from a text file.
  * First 3 lines should store M, N and K values.
  * Next two lines should store matrix values as 1D array
- * in the column-wise order.
+ * in a column-wise order.
  */
 void read_values(int *M, int *N, int *K, double **A, double **B, double **C) {
         FILE *data;
@@ -93,10 +134,16 @@ int main(void)
         int M, N, K;
         double *A, *B, *C;
 
-        read_values(&M, &N, &K, &A, &B, &C);
-        blas_dgemm(M, N, K, A, B, C);
-        print_result(M, K, C);
-        save_result(M, K, C);
+        if (READ_EXAMPLE == 1) {
+                read_example(&M, &N, &K, &A, &B, &C);
+                blas_dgemm(M, N, K, A, B, C);
+                print_result(M, K, C);
+        } else {
+                read_values(&M, &N, &K, &A, &B, &C);
+                blas_dgemm(M, N, K, A, B, C);
+                print_result(M, K, C);
+                save_result(M, K, C);
+        }
 
         return 0;
 }
