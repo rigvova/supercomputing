@@ -2,7 +2,13 @@
 #include <stdlib.h>
 #include <omp.h>
 
-
+/*
+ * Multiplicates two matrices (A x B) and writes result into C.
+ *  - A should have len==M*N;
+ *  - B should have len==N*K;
+ *  - C should have len==M*K.
+ * All matrices should store values in the column-wise order.
+ */
 void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 {
         double sum;
@@ -17,7 +23,11 @@ void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
                         }
 }
 
-
+/*
+ * Prints values of matrix C.
+ * Matrix should be present as an 1D array 
+ * and store values in the column-wise order. 
+ */
 void print_result(int M, int K, double *C)
 {
         for (int j = 0; j < M; j++) {
@@ -30,7 +40,12 @@ void print_result(int M, int K, double *C)
                 printf("%f ", C[i]);
 }
 
-
+/*
+ * Reads values from a text file.
+ * First 3 lines should store M, N and K values.
+ * Next two lines should store matrix values as 1D array
+ * in the column-wise order.
+ */
 void read_values(int *M, int *N, int *K, double **A, double **B, double **C) {
         FILE *data;
 
@@ -53,7 +68,10 @@ void read_values(int *M, int *N, int *K, double **A, double **B, double **C) {
         fclose(data);
 }
 
-
+/* 
+ * Prints result matrix C into 'cresult.txt'.
+ * Used for comparison with results from the Python script ('pyresult.txt').
+ */
 void save_result(int M, int K, double *C) 
 {
         FILE *data;
@@ -69,7 +87,6 @@ void save_result(int M, int K, double *C)
 
         fclose(data);
 }
-
 
 int main(void)
 {
