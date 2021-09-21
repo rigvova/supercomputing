@@ -13,7 +13,7 @@
  *  - A should have len==M*N;
  *  - B should have len==N*K;
  *  - C should have len==M*K.
- * All matrices should store values in a column-wise order.
+ * All matrices should store values in a column-major order.
  */
 void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 {
@@ -32,7 +32,7 @@ void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 /*
  * Prints values of matrix C.
  * Matrix should be present as an 1D array 
- * and store values in a column-wise order. 
+ * and store values in a column-major order. 
  */
 void print_result(int M, int K, double *C)
 {
@@ -54,7 +54,7 @@ void print_result(int M, int K, double *C)
  *   |3 3 3 3|   |3 3 3|   |30 30 30|
  *               |4 4 4|
  * 
- * Matrices are present as 1D arrays with values in a column-wise order.
+ * Matrices are present as 1D arrays with values in a column-major order.
  */
 void read_example(int *M, int *N, int *K, double **A, double **B, double **C) 
 {
@@ -90,7 +90,7 @@ void read_example(int *M, int *N, int *K, double **A, double **B, double **C)
  * Reads values from a text file.
  * First 3 lines should store M, N and K values.
  * Next two lines should store matrix values as 1D array
- * in a column-wise order.
+ * in a column-major order.
  */
 void read_values(int *M, int *N, int *K, double **A, double **B, double **C) {
         FILE *data;
