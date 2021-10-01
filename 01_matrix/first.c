@@ -19,14 +19,15 @@ void blas_dgemm(int M, int N, int K, double *A, double *B, double *C)
 {
         double sum;
 
-        #pragma omp parallel num_threads(N)
-        #pragma omp for reduction(+:sum)
-        for (int n = 0; n < N; n++)
-                for (int k = 0; k < K; k++)
-                        for (int m = 0; m < M; m++) {
-                                sum = C[k * M + m] + A[n * M + m] * B[k * N + n];
-                                C[k * M + m] = sum;
-                        }
+        #pragma omp parallel
+        #pragma omp for
+        for (int m = 0; m < M; m++)
+                for (int k = 0; k < K; k++) {
+                        sum = 0;
+                        for (int n = 0; n < N; n++)
+                                sum += A[n * M + m] * B[k * N + n];  
+                        C[k * M + m] = sum;
+                }
 }
 
 /*
